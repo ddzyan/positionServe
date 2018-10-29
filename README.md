@@ -26,7 +26,7 @@ $npm -v
 
 ### 启动方法
 ```bash
-git clone
+git clone https://github.com/ddzyan/positionServe.git
 
 npm install 
 
