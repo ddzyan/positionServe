@@ -1,0 +1,6 @@
+--reporter mochawesome
+--reporter-options reportFilename=test,saveHtml=true,reportDir=reporter,reportTitle=test,reportPageTitle=eos-gateway,cdn=true,overwrite=true,saveJson=false
+--bail
+--timeout 50000
+--recursive
+--slow 1000

@@ -1,0 +1,79 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2018-10-29T17:20:06.216Z",
+    "end": "2018-10-29T17:20:06.290Z",
+    "duration": 74,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "passPercentClass": "success",
+    "pendingPercentClass": "danger"
+  },
+  "suites": {
+    "uuid": "c7e803a1-ea44-4549-a141-2ed352787b91",
+    "title": "",
+    "fullFile": "",
+    "file": "",
+    "beforeHooks": [],
+    "afterHooks": [],
+    "tests": [],
+    "suites": [
+      {
+        "uuid": "302eedc8-ed30-412e-a450-3b692e2c6777",
+        "title": "定位服务测试",
+        "fullFile": "F:\\work\\workSpace\\temp\\positionServe\\test\\position.test.js",
+        "file": "\\test\\position.test.js",
+        "beforeHooks": [],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "上传经纬度",
+            "fullTitle": "定位服务测试 上传经纬度",
+            "timedOut": false,
+            "duration": 61,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "request(app.listen())\n    .post('/position')\n    .set('Content-Type', 'application/json')\n    .send({\n        longitude: 30.580735999999998,\n        latitude: 104.067072,\n    })\n    .expect(200)\n    .end((err, res) => {\n        console.log(res.body);\n        expect(res.type).to.be.equal(\"application/json\");\n        expect(res.body.code).to.be.equal('1000');\n        done();\n    });",
+            "err": {},
+            "isRoot": false,
+            "uuid": "06efca12-87de-485a-b540-20f2e42612b0",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "06efca12-87de-485a-b540-20f2e42612b0"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 61,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 50000
+      }
+    ],
+    "passes": [],
+    "failures": [],
+    "pending": [],
+    "skipped": [],
+    "duration": 0,
+    "root": true,
+    "rootEmpty": true,
+    "_timeout": 50000
+  },
+  "copyrightYear": 2018
+}
