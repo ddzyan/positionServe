@@ -18,4 +18,17 @@ describe("定位服务测试", function () {
                 done();
             });
     })
+
+    it("获取全部经纬度", function (done) {
+        request(app.listen())
+            .get('/positions')
+            .set('Content-Type', 'application/json')
+            .expect(200)
+            .end((err, res) => {
+                expect(res.type).to.be.equal("application/json");
+                expect(res.body.code).to.be.equal('1000');
+                expect(res.body.data.length).to.be.above(0);
+                done();
+            });
+    })
 })
