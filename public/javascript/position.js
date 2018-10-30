@@ -53,9 +53,12 @@ function ajax_get() {
         success: function (msg) {
             console.log(msg.data);
             for (let i = 0; i < msg.data.length; i++) {
+                const { latitude: longitude, longitude: latitude } = msg.data[i];
+                console.log(`latitude :${latitude}`);
+                console.log(`longitude :${longitude}`);
                 markerArr.push({
-                    latitude: `${msg.data[i].latitude}`,
-                    longitude: `${msg.data[i].longitude}`
+                    latitude: `${latitude}`,
+                    longitude: `${longitude}`
                 })
             }
             for (var i = 0; i < markerArr.length; i++) {
