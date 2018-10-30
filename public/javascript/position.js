@@ -1,16 +1,11 @@
 var markerArr = [{
-        addr: "120.792084,30.740111",
-        descrip: "老丁1"
-    },
-    {
-        addr: "120.832257,30.741601",
-        descrip: "老丁2"
-    },
-    {
-        addr: "120.803942,30.753674",
-        descrip: "老丁3"
-    }
-];
+    latitude: "120.792084",
+    longitude: "30.740111"
+},
+{
+    latitude: "120.832257",
+    longitude: "30.741601"
+}];
 
 var map; //Map实例    
 function map_init() {
@@ -53,17 +48,25 @@ function addMarker(point, index) {
 function ajax_get() {
     $.ajax({
         type: 'GET',
-        url: 'http://127.0.0.1:3000/positions',
+        url: 'http://localhost:3000/positions',
         dataType: 'json',
         success: function (msg) {
-            markerArr = msg.data;
-            //标记经纬度地点
+            console.log(msg.data);
+            for (let i = 0; i < msg.data.length; i++) {
+                markerArr.push({
+                    latitude: `${msg.data[i].latitude}`,
+                    longitude: `${msg.data[i].longitude}`
+                })
+            }
             for (var i = 0; i < markerArr.length; i++) {
-                console.log(markerArr[i].latitude);
-                console.log(markerArr[i].longitude);
+                console.log(markerArr[i]);
                 addMarker(new window.BMap.Point(markerArr[i].latitude, markerArr[i].longitude), i);
                 //addInfoWindow(maker, markerArr[i], i);     
             }
+            console.log(markerArr);
+        },
+        error: function (error) {
+            console.log(error);
         }
 
     });
