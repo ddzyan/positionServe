@@ -20,7 +20,7 @@ app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
-  extension: 'pug'
+  extension: 'html'
 }))
 
 // logger
@@ -30,6 +30,15 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
+app
+  .use(async (ctx, next) => {
+    ctx.set('Access-Control-Allow-Origin', '*'); // 跨域处理
+    ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    ctx.set('Access-Control-Allow-Methods', 'POST, GET'); // 接受的请求模式
+    ctx.set('Access-Control-Allow-Credentials', true); // 允许带上 cookie
+    return next();
+  })
 
 // routes
 app.use(position.routes(), position.allowedMethods())

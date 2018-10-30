@@ -1,9 +1,11 @@
-
 const positionMap = new Map();
 
 exports.setPosition = async (ctx) => {
     try {
-        const { latitude, longitude } = ctx.request.body;
+        const {
+            latitude,
+            longitude
+        } = ctx.request.body;
         positionMap.set(ctx.ip, {
             latitude,
             longitude,
@@ -11,7 +13,7 @@ exports.setPosition = async (ctx) => {
         });
         ctx.body = {
             code: "1000",
-            message: "上传成功",
+            message: "success",
             data: {
                 latitude,
                 longitude
@@ -25,7 +27,11 @@ exports.setPosition = async (ctx) => {
 exports.getPositions = async (ctx) => {
     const savedLocation = [];
     for ([key, value] of positionMap.entries()) {
-        const { longitude, latitude, createdAt } = value;
+        const {
+            longitude,
+            latitude,
+            createdAt
+        } = value;
         key = key.replace(/[:f]/g, '');
         savedLocation.push({
             ip: key,
@@ -37,7 +43,7 @@ exports.getPositions = async (ctx) => {
 
     ctx.body = {
         code: "1000",
-        message: "上传成功",
+        message: "success",
         data: savedLocation
     };
 }
