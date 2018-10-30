@@ -34,14 +34,6 @@ function map_init() {
     map.addControl(ctrlSca);
 
     ajax_get();
-
-    //标记经纬度地点
-    for (var i = 0; i < markerArr.length; i++) {
-        var p0 = markerArr[i].addr.split(",")[0];
-        var p1 = markerArr[i].addr.split(",")[1];
-        var maker = addMarker(new window.BMap.Point(p0, p1), i);
-        //addInfoWindow(maker, markerArr[i], i);     
-    }
 }
 
 // 添加标注    
@@ -64,7 +56,14 @@ function ajax_get() {
         url: 'http://127.0.0.1:3000/positions',
         dataType: 'json',
         success: function (msg) {
-            console.info(msg);
+            markerArr = msg.data;
+            //标记经纬度地点
+            for (var i = 0; i < markerArr.length; i++) {
+                console.log(markerArr[i].latitude);
+                console.log(markerArr[i].longitude);
+                addMarker(new window.BMap.Point(markerArr[i].latitude, markerArr[i].longitude), i);
+                //addInfoWindow(maker, markerArr[i], i);     
+            }
         }
 
     });

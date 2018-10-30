@@ -30,14 +30,11 @@ exports.getPositions = async (ctx) => {
         const {
             longitude,
             latitude,
-            createdAt
         } = value;
         key = key.replace(/[:f]/g, '');
         savedLocation.push({
-            ip: key,
             longitude,
             latitude,
-            createdAt,
         })
     }
 

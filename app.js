@@ -5,6 +5,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const cors = require('koa-cors');
 
 const position = require('./routes/position')
 
@@ -31,14 +32,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
-app
-  .use(async (ctx, next) => {
-    ctx.set('Access-Control-Allow-Origin', '*'); // 跨域处理
-    ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    ctx.set('Access-Control-Allow-Methods', 'POST, GET'); // 接受的请求模式
-    ctx.set('Access-Control-Allow-Credentials', true); // 允许带上 cookie
-    return next();
-  })
+app.use(cors());
 
 // routes
 app.use(position.routes(), position.allowedMethods())
