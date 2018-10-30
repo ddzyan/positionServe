@@ -48,7 +48,7 @@ function addMarker(point, index) {
 function ajax_get() {
     $.ajax({
         type: 'GET',
-        url: 'http://127.0.0.1:3000/positions',
+        url: 'http://111.231.215.55:3000/positions',
         dataType: 'json',
         success: function (msg) {
             console.log(msg.data);
