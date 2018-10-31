@@ -41,7 +41,7 @@ function addMarker(point, index) {
 function ajax_get() {
   $.ajax({
     type: "GET",
-    url: "http://127.0.0.1:3000/positions",
+    url: "/positions",
     dataType: "json",
     success: function (msg) {
       map.clearOverlays();
