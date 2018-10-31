@@ -48,7 +48,6 @@ function addMarker(point, index) {
     icon: myIcon
   });
   map.addOverlay(marker);
-  map.panTo(new_point);
 }
 
 function ajax_get() {
