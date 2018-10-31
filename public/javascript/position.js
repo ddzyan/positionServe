@@ -1,14 +1,3 @@
-var markerArr = [
-  {
-    latitude: "120.792084",
-    longitude: "30.740111"
-  },
-  {
-    latitude: "120.832257",
-    longitude: "30.850601"
-  }
-];
-
 var map; //Map实例
 function map_init() {
   map = new BMap.Map("map");
@@ -38,8 +27,7 @@ function map_init() {
 function addMarker(point, index) {
   var myIcon = new BMap.Icon(
     "http://api.map.baidu.com/img/markers.png",
-    new BMap.Size(23, 25),
-    {
+    new BMap.Size(23, 25), {
       offset: new BMap.Size(10, 25),
       imageOffset: new BMap.Size(0, 0 - index * 25)
     }
@@ -53,25 +41,21 @@ function addMarker(point, index) {
 function ajax_get() {
   $.ajax({
     type: "GET",
-    url: "http://111.231.215.55:3000/positions",
+    url: "http://localhost:3000/positions",
     dataType: "json",
-    success: function(msg) {
+    success: function (msg) {
       map.clearOverlays();
       for (let i = 0; i < msg.data.length; i++) {
-        const { latitude: longitude, longitude: latitude } = msg.data[i];
-        markerArr.push({
-          latitude: `${latitude}`,
-          longitude: `${longitude}`
-        });
-      }
-      for (var i = 0; i < markerArr.length; i++) {
-        addMarker(
-          new window.BMap.Point(markerArr[i].latitude, markerArr[i].longitude),
-          i
-        );
+        const {
+          longitude,
+          latitude
+        } = msg.data[i];
+        console.log(`经度 :${longitude}`);
+        console.log(`纬度 :${latitude}`);
+        addMarker(new window.BMap.Point(longitude,latitude),i)
       }
     },
-    error: function(error) {
+    error: function (error) {
       console.log(error);
     }
   });
