@@ -36,7 +36,6 @@ function addMarker(longitude, latitude, title) {
     map.addOverlay(marker);
     const label = new BMap.Label(title, { offset: new BMap.Size(20, -10) });
     marker.setLabel(label); //添加百度label
-    bm.setCenter(data.points[0]);
   })
 }
 
