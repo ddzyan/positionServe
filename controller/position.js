@@ -4,11 +4,16 @@ exports.setPosition = async (ctx) => {
     try {
         const {
             latitude,
-            longitude
+            longitude,
+            uuid,
+            title,
         } = ctx.request.body;
-        positionMap.set(ctx.ip, {
+        const clientIp = ctx.ip.replace(/[:f]/g, '');
+        positionMap.set(uuid, {
             latitude,
             longitude,
+            clientIp,
+            title,
             createdAt: Date.now()
         });
         ctx.body = {
@@ -26,15 +31,18 @@ exports.setPosition = async (ctx) => {
 
 exports.getPositions = async (ctx) => {
     const savedLocation = [];
-    for ([key, value] of positionMap.entries()) {
+    for ([uuid, value] of positionMap.entries()) {
         const {
             longitude,
             latitude,
+            clientIp,
+            title
         } = value;
-        key = key.replace(/[:f]/g, '');
         savedLocation.push({
             longitude,
             latitude,
+            clientIp,
+            title
         })
     }
 

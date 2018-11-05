@@ -5,6 +5,7 @@ function map_init() {
   var point = new BMap.Point(120.762189, 30.75265);
   //初始化地图
   map.centerAndZoom(point, 13);
+  map.addControl(new BMap.NavigationControl());
   //启用滚轮
   map.enableScrollWheelZoom(true);
   //添加缩放控件
@@ -23,19 +24,20 @@ function map_init() {
   setInterval(ajax_get, 2000);
 }
 
-// 添加标注
-function addMarker(point, index) {
-  var myIcon = new BMap.Icon(
-    "http://api.map.baidu.com/img/markers.png",
-    new BMap.Size(23, 25), {
-      offset: new BMap.Size(10, 25),
-      imageOffset: new BMap.Size(0, 0 - index * 25)
-    }
-  );
-  var marker = new BMap.Marker(point, {
-    icon: myIcon
-  });
-  map.addOverlay(marker);
+// 添加标注和谷歌坐标转换
+function addMarker(longitude, latitude, title) {
+  const ggPoint = new BMap.Point(latitude, longitude);
+
+  var convertor = new BMap.Convertor();
+  var pointArr = [];
+  pointArr.push(ggPoint);
+  convertor.translate(pointArr, 3, 5, function (data){
+    const marker = new BMap.Marker(data.points[0]);
+    map.addOverlay(marker);
+    const label = new BMap.Label(title, { offset: new BMap.Size(20, -10) });
+    marker.setLabel(label); //添加百度label
+    bm.setCenter(data.points[0]);
+  })
 }
 
 function ajax_get() {
@@ -48,11 +50,13 @@ function ajax_get() {
       for (let i = 0; i < msg.data.length; i++) {
         const {
           longitude,
-          latitude
+          latitude,
+          title
         } = msg.data[i];
         console.log(`经度 :${longitude}`);
         console.log(`纬度 :${latitude}`);
-        addMarker(new window.BMap.Point(longitude,latitude),i)
+        console.log(`标题 :${title}`);
+        addMarker(longitude, latitude, title)
       }
     },
     error: function (error) {
