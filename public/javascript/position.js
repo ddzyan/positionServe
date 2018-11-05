@@ -21,7 +21,7 @@ function map_init() {
   map.addControl(ctrlSca);
 
   ajax_get();
-  setInterval(ajax_get, 2000);
+  setInterval(ajax_get, 5000);
 }
 
 // 添加标注和谷歌坐标转换
@@ -31,7 +31,7 @@ function addMarker(longitude, latitude, title) {
   var convertor = new BMap.Convertor();
   var pointArr = [];
   pointArr.push(ggPoint);
-  convertor.translate(pointArr, 3, 5, function (data){
+  convertor.translate(pointArr, 3, 5, function (data) {
     const marker = new BMap.Marker(data.points[0]);
     map.addOverlay(marker);
     const label = new BMap.Label(title, { offset: new BMap.Size(20, -10) });
@@ -55,7 +55,7 @@ function ajax_get() {
         console.log(`经度 :${longitude}`);
         console.log(`纬度 :${latitude}`);
         console.log(`标题 :${title}`);
-        addMarker(longitude, latitude, title)
+        addMarker(latitude, longitude, title)
       }
     },
     error: function (error) {
