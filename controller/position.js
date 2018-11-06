@@ -1,4 +1,4 @@
-const positionMap = new Map();
+const position = require("../model/Positions")();
 
 exports.setPosition = async (ctx) => {
     try {
@@ -8,13 +8,10 @@ exports.setPosition = async (ctx) => {
             uuid,
             title,
         } = ctx.request.body;
-        const clientIp = ctx.ip.replace(/[:f]/g, '');
-        positionMap.set(uuid, {
+        position.addPosition(uuid, {
             latitude,
             longitude,
-            clientIp,
-            title,
-            createdAt: Date.now()
+            title
         });
         ctx.body = {
             code: "1000",
@@ -30,25 +27,45 @@ exports.setPosition = async (ctx) => {
 }
 
 exports.getPositions = async (ctx) => {
-    const savedLocation = [];
-    for ([uuid, value] of positionMap.entries()) {
-        const {
-            longitude,
-            latitude,
-            clientIp,
-            title
-        } = value;
-        savedLocation.push({
-            longitude,
-            latitude,
-            clientIp,
-            title
-        })
-    }
+    try {
+        const savedLocation = position.getPositions();
 
-    ctx.body = {
-        code: "1000",
-        message: "success",
-        data: savedLocation
-    };
+        ctx.body = {
+            code: "1000",
+            message: "success",
+            data: savedLocation
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
+exports.delPositions = async (ctx) => {
+    try {
+        const {
+            uuid
+        } = ctx.request.body;
+
+        position.delPosition(uuid);
+        ctx.body = {
+            code: "1000",
+            message: "success",
+            data: {}
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
+exports.clearPositions = async (ctx) => {
+    try {
+        position.cleanPositions();
+        ctx.body = {
+            code: "1000",
+            message: "success",
+            data: {}
+        };
+    } catch (error) {
+        throw error;
+    }
 }

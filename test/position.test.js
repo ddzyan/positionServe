@@ -10,6 +10,7 @@ describe("定位服务测试", function () {
             .send({
                 longitude: 30.580735999999998,
                 latitude: 104.067072,
+                uuid:"123123"
             })
             .expect(200)
             .end((err, res) => {
@@ -17,7 +18,7 @@ describe("定位服务测试", function () {
                 expect(res.body.code).to.be.equal('1000');
                 done();
             });
-    })
+    });
 
     it("获取全部经纬度", function (done) {
         request(app.listen())
@@ -30,5 +31,32 @@ describe("定位服务测试", function () {
                 expect(res.body.data.length).to.be.above(0);
                 done();
             });
-    })
+    });
+
+    it("删除指定UUID经纬度",function(done){
+        request(app.listen())
+        .del('/positions')
+        .set('Content-Type', 'application/json')
+        .send({
+            uuid:"123123"
+        })
+        .expect(200)
+        .end((err, res) => {
+            expect(res.type).to.be.equal("application/json");
+            expect(res.body.code).to.be.equal('1000');
+            done();
+        });
+    });
+
+    it("删除全部经纬度",function(done){
+        request(app.listen())
+        .del('/allPositions')
+        .set('Content-Type', 'application/json')
+        .expect(200)
+        .end((err, res) => {
+            expect(res.type).to.be.equal("application/json");
+            expect(res.body.code).to.be.equal('1000');
+            done();
+        });
+    });
 })
